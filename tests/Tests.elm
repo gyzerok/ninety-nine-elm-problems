@@ -6,6 +6,7 @@ import Fuzz
 import Chapter1
 import Chapter2
 import Chapter3
+import Chapter4
 
 
 all : Test
@@ -14,6 +15,7 @@ all =
         [ chapter1suit
         , chapter2suit
         , chapter3suit
+        , chapter4suit
         ]
 
 
@@ -197,4 +199,61 @@ chapter3suit =
                 Expect.equal
                     (Chapter3.lsort [ [ 1, 2, 3 ], [ 1 ], [ 1, 2 ] ])
                     [ [ 1 ], [ 1, 2 ], [ 1, 2, 3 ] ]
+        ]
+
+
+chapter4suit : Test
+chapter4suit =
+    describe "Chapter4"
+        [ test "isPrime works" <|
+            \_ ->
+                Expect.equal
+                    (List.map Chapter4.isPrime [ 1, 2, 4, 7, 10, 401 ])
+                    [ True, True, False, True, False, True ]
+        , test "gcd works" <|
+            \_ ->
+                Expect.equal
+                    (List.map
+                        (\( x, y ) -> Chapter4.gcd x y)
+                        [ ( 36, 63 ), ( -3, -6 ), ( -3, 6 ) ]
+                    )
+                    [ 9, 3, 3 ]
+        , test "coprime works" <|
+            \_ ->
+                Expect.equal
+                    (List.map
+                        (\( x, y ) -> Chapter4.coprime x y)
+                        [ ( 36, 63 ), ( 35, 64 ) ]
+                    )
+                    [ False, True ]
+        , test "totientPhi works" <|
+            \_ ->
+                Expect.equal
+                    (Chapter4.totientPhi 10)
+                    4
+        , test "primeFactors works" <|
+            \_ ->
+                Expect.equal
+                    (Chapter4.primeFactors 315)
+                    [ 3, 3, 5, 7 ]
+        , test "primeFactorsMult works" <|
+            \_ ->
+                Expect.equal
+                    (Chapter4.primeFactorsMult 315)
+                    [ ( 3, 2 ), ( 5, 1 ), ( 7, 1 ) ]
+        , test "totientPhi' works" <|
+            \_ ->
+                Expect.equal
+                    (Chapter4.totientPhi' 10)
+                    (Chapter4.totientPhi 10)
+        , test "goldbach works" <|
+            \_ ->
+                Expect.equal
+                    (Chapter4.goldbach 28)
+                    (Just ( 5, 23 ))
+        , test "goldbachList works" <|
+            \_ ->
+                Expect.equal
+                    (Chapter4.goldbachList 9 20)
+                    [ Just ( 3, 7 ), Just ( 5, 7 ), Just ( 3, 11 ), Just ( 3, 13 ), Just ( 5, 13 ), Just ( 3, 17 ) ]
         ]
