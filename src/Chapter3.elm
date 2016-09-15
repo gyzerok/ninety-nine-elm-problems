@@ -18,20 +18,55 @@ range a b =
     [a..b]
 
 
-combinations2 : List a -> List ( a, a )
+combinations2 : List a -> List (List a)
 combinations2 list =
     case list of
         [] ->
             []
 
-        x :: [] ->
+        _ :: [] ->
             []
 
         x :: xs ->
-            List.map2 (,)
-                (List.repeat (List.length xs) x)
-                xs
+            xs
+                |> List.map (\y -> x :: y :: [])
                 |> (flip (++)) (combinations2 xs)
+
+
+combinations3 : List a -> List (List a)
+combinations3 list =
+    case list of
+        [] ->
+            []
+
+        _ :: [] ->
+            []
+
+        _ :: _ :: [] ->
+            []
+
+        x :: xs ->
+            combinations2 xs
+                |> List.map (\ys -> x :: ys)
+                |> (flip (++)) (combinations3 xs)
+
+
+combinations : Int -> List a -> List (List a)
+combinations k list =
+    case ( k, list ) of
+        ( _, [] ) ->
+            []
+
+        ( 0, _ ) ->
+            []
+
+        ( 1, _ ) ->
+            List.map (\x -> [ x ]) list
+
+        ( _, x :: xs ) ->
+            combinations (k - 1) xs
+                |> List.map (\ys -> x :: ys)
+                |> (flip (++)) (combinations k xs)
 
 
 group : Int -> List a -> List (List a)

@@ -5,6 +5,7 @@ import Expect
 import Fuzz
 import Chapter1
 import Chapter2
+import Chapter3
 
 
 all : Test
@@ -12,6 +13,7 @@ all =
     describe "Ninety-Nine Elm Problems Suit"
         [ chapter1suit
         , chapter2suit
+        , chapter3suit
         ]
 
 
@@ -149,4 +151,50 @@ chapter2suit =
                 Expect.equal
                     (Chapter2.removeAt 2 [])
                     ( Nothing, [] )
+        ]
+
+
+chapter3suit : Test
+chapter3suit =
+    describe "Chapter3"
+        [ test "insertAt works" <|
+            \_ ->
+                Expect.equal
+                    (Chapter3.insertAt 1 2 [ 1, 3, 4 ])
+                    [ 1, 2, 3, 4 ]
+        , test "range works" <|
+            \_ ->
+                Expect.equal
+                    (Chapter3.range 1 4)
+                    [1..4]
+        , test "combinations2 works" <|
+            \_ ->
+                Expect.equal
+                    (Chapter3.combinations2 [ 1, 2, 3 ])
+                    [ [ 1, 2 ], [ 1, 3 ], [ 2, 3 ] ]
+        , test "combinations3 works" <|
+            \_ ->
+                Expect.equal
+                    (Chapter3.combinations3 [ 1, 2, 3, 4, 5 ])
+                    [ [ 1, 2, 3 ]
+                    , [ 1, 2, 4 ]
+                    , [ 1, 2, 5 ]
+                    , [ 1, 3, 4 ]
+                    , [ 1, 3, 5 ]
+                    , [ 1, 4, 5 ]
+                    , [ 2, 3, 4 ]
+                    , [ 2, 3, 5 ]
+                    , [ 2, 4, 5 ]
+                    , [ 3, 4, 5 ]
+                    ]
+        , test "combinations works" <|
+            \_ ->
+                Expect.equal
+                    (Chapter3.combinations 3 [ 1, 2, 3, 4, 5 ])
+                    (Chapter3.combinations3 [ 1, 2, 3, 4, 5 ])
+        , test "lsort works" <|
+            \_ ->
+                Expect.equal
+                    (Chapter3.lsort [ [ 1, 2, 3 ], [ 1 ], [ 1, 2 ] ])
+                    [ [ 1 ], [ 1, 2 ], [ 1, 2, 3 ] ]
         ]
