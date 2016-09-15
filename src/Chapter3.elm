@@ -71,7 +71,7 @@ combinations k list =
 
 group : Int -> List a -> List (List a)
 group count list =
-    Debug.crash "not implemented"
+    Debug.crash "we can solve this problem using combinations and reducing list every time for already picked elements"
 
 
 lsort : List (List a) -> List (List a)
